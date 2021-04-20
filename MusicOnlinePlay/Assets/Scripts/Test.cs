@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-
+using System;
 public class Test : MonoBehaviour
 {
     public AudioSource audioSource;
@@ -14,13 +14,25 @@ public class Test : MonoBehaviour
 #if !UNITY_EDITOR
         url="http://10.1.23.61:80/J4.mp3";
 #endif
-    }
 
+        uri = new Uri(url);
+        string[] seg = uri.Segments;
+        //foreach (string item in seg)
+        //{
+        //    Debug.Log(item);
+        //}
+        string fileName=seg[seg.Length - 1];
+        string[] strs = fileName.Split('.');
+        string suffix = strs[strs.Length-1];
+        Debug.Log(suffix);
+    }
+    Uri uri;
     string status ="网络请求状态";
     float _volume = 0.5f;
     private void OnGUI()
     {
         url= GUI.TextField(new Rect(100,100, Screen.width, 100), url);
+       
         GUI.Label(new Rect(100, 200, Screen.width, 100), status);
         if (GUI.Button(new Rect(Screen.width / 2,300, 100, 100), "网络请求声音"))
         {           
@@ -47,7 +59,7 @@ public class Test : MonoBehaviour
 
         Debug.Log(url);
 
-        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG))
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(uri, AudioType.MPEG))
         {
             yield return www.SendWebRequest();
 
