@@ -10,9 +10,9 @@ public class Test : MonoBehaviour
      void Start()
     {              
         //string url = "http://www.my-server.com/audio.ogg";
-        url = "http://localhost:80/J4.mp3";
+        url = "http://localhost:80/J4.mp3";        
 #if !UNITY_EDITOR
-        url="http://10.1.23.61:80/J4.mp3";
+        url="http://10.1.23.61:80/J4.mp3";        
 #endif
 
         uri = new Uri(url);
