@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System;
+using BestHTTP;
+
 public class Test : MonoBehaviour
 {
     public AudioSource audioSource;
     public AudioClip audioClip;
-     void Start()
+
+    public GameObject Obj;
+    void Start()
     {              
         //string url = "http://www.my-server.com/audio.ogg";
         url = "http://localhost:80/J4.mp3";        
@@ -26,6 +30,10 @@ public class Test : MonoBehaviour
         string suffix = strs[strs.Length-1];
         Debug.Log(suffix);
     }
+
+
+ 
+
     Uri uri;
     string status ="网络请求状态";
     float _volume = 0.5f;
