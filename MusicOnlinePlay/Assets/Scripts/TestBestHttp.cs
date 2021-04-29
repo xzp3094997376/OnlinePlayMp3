@@ -1,9 +1,11 @@
-﻿using BestHTTP;
+using BestHTTP;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEditor;
+
 public class TestBestHttp : MonoBehaviour
 {
     public GameObject Obj;
@@ -27,14 +29,26 @@ public class TestBestHttp : MonoBehaviour
         }
     }
 
+    string url = "http://10.1.23.61:80/testSize.png";
+    private void OnGUI()
+    {
+        url=GUILayout.TextField(url);
+        if (GUI.Button(new Rect(0,100,100,100),"下载图片"))
+        {
+            HttpSendMsg();
+        }
+    }
+
     HTTPRequest hr;
     void HttpSendMsg()
     {
-        string url = "http://10.1.23.61:80/gfxqfc_Normal.png";
+        //string url = "http://10.1.23.61:80/testSize.png";
         hr = new HTTPRequest(new System.Uri(url), (request, response) =>
         {
             Texture2D tex = new Texture2D(0, 0);
             tex.LoadImage(response.Data);
+            tex= TextureUtils.ReSetTextureSize(tex, 256, 256);                      
+            tex.Apply();
             Obj.GetComponent<Renderer>().material.mainTexture = tex;
 
             Debug.Log(response.DataAsText);
@@ -53,6 +67,9 @@ public class TestBestHttp : MonoBehaviour
 
     }
 
+    void TestImport()
+    {        
+    }
 
     void HttpSendStream()
     {
